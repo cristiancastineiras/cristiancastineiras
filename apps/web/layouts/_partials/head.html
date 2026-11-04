@@ -1,0 +1,68 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{{- $desc := .Description | default site.Home.Description | default (i18n "footer_tagline") }}
+{{- $isPost := and .IsPage (eq .Section "posts") }}
+{{- /* Imagen para redes: `image` del front matter (un archivo del bundle, de assets/ o de static/) o, si no, ogImage. */ -}}
+{{- $og := "" }}{{ $ogImg := false }}
+{{- with .Params.image | default site.Params.ogImage }}
+  {{- with $.Resources.Get . | default (resources.Get .) }}{{ $ogImg = . }}{{ $og = .Permalink }}{{ else }}{{ $og = absURL . }}{{ end }}
+{{- end }}
+{{- .Store.Set "og" $og }}
+<title>{{ if .IsHome }}{{ .Title }}{{ else }}{{ cond (eq .Kind "404") (i18n "nf_title") .Title }} | {{ site.Title }}{{ end }}</title>
+<meta name="description" content="{{ $desc }}">
+<meta name="author" content="{{ site.Params.author }}">
+{{- if eq .Kind "404" }}
+<meta name="robots" content="noindex">
+{{- else }}
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="{{ .Permalink }}">
+{{- end }}
+{{- with site.GetPage "/posts" }}{{ with .OutputFormats.Get "rss" }}
+<link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ site.Title }}">
+{{- end }}{{ end }}
+{{- with site.Params.googleVerification }}
+<meta name="google-site-verification" content="{{ . }}">
+{{- end }}
+{{- with site.Params.bingVerification }}
+<meta name="msvalidate.01" content="{{ . }}">
+{{- end }}
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1116" media="(prefers-color-scheme: dark)">
+
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:type" content="{{ if $isPost }}article{{ else }}website{{ end }}">
+<meta property="og:title" content="{{ .Title }}">
+<meta property="og:description" content="{{ $desc }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:locale" content="es_ES">
+{{- if $isPost }}
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+<meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}">
+<meta property="article:author" content="{{ site.Home.Permalink }}">
+{{- range .Params.tags }}
+<meta property="article:tag" content="{{ . }}">
+{{- end }}
+{{- end }}
+{{- with $og }}
+<meta property="og:image" content="{{ . }}">
+{{- with $ogImg }}{{ if .Width }}
+<meta property="og:image:width" content="{{ .Width }}">
+<meta property="og:image:height" content="{{ .Height }}">
+{{- end }}{{ end }}
+<meta property="og:image:alt" content="{{ $.Title }}">
+<meta name="twitter:image" content="{{ . }}">
+<meta name="twitter:image:alt" content="{{ $.Title }}">
+{{- end }}
+<meta name="twitter:card" content="{{ if $og }}summary_large_image{{ else }}summary{{ end }}">
+<meta name="twitter:title" content="{{ .Title }}">
+<meta name="twitter:description" content="{{ $desc }}">
+
+<link rel="icon" href="{{ "pixel/logo.svg" | relURL }}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
+
+<link rel="preload" href="{{ "fonts/inter-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+{{ with resources.Get "css/main.css" | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+{{- end }}
+{{ partial "schema.html" . }}

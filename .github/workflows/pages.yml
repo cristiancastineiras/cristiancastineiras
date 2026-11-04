@@ -1,0 +1,51 @@
+name: Deploy Hugo to GitHub Pages
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      HUGO_VERSION: "0.168.0"
+      HUGO_ENVIRONMENT: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Install Hugo
+        run: |
+          curl --fail --location --retry 3 \
+            "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_linux-amd64.deb" \
+            --output "${RUNNER_TEMP}/hugo.deb"
+          sudo dpkg -i "${RUNNER_TEMP}/hugo.deb"
+
+      - name: Build website
+        run: hugo --source apps/web --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/web/public
+
+      - name: Deploy to Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

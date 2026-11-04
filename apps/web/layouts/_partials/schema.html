@@ -1,0 +1,44 @@
+{{- /* Datos estructurados (JSON-LD). Portada = página de perfil + persona + web; resto = migas de pan, más el
+       artículo en los posts. La imagen la resuelve head.html (.Store "og"). */ -}}
+{{- $home := site.Home }}
+{{- $og := .Store.Get "og" }}
+{{- $sameAs := slice }}
+{{- with site.Params.github }}{{ $sameAs = $sameAs | append (printf "https://github.com/%s" .) }}{{ end }}
+{{- with site.Params.linkedin }}{{ $sameAs = $sameAs | append (printf "https://www.linkedin.com/in/%s/" .) }}{{ end }}
+{{- $author := dict "@type" "Person" "@id" (printf "%s#person" $home.Permalink) "name" site.Params.author "url" $home.Permalink "sameAs" $sameAs }}
+{{- with site.Params.role }}{{ $author = merge $author (dict "jobTitle" .) }}{{ end }}
+{{- with site.Params.worksFor }}{{ $author = merge $author (dict "worksFor" (dict "@type" "Organization" "name" .)) }}{{ end }}
+{{- with site.Params.locality }}{{ $author = merge $author (dict "address" (dict "@type" "PostalAddress" "addressLocality" . "addressRegion" site.Params.region "addressCountry" site.Params.country)) }}{{ end }}
+{{- with resources.GetMatch "img/avatar.*" }}{{ $author = merge $author (dict "image" .Permalink) }}{{ end }}
+{{- $graph := slice }}
+{{- if .IsHome }}
+  {{- $website := dict "@type" "WebSite" "@id" (printf "%s#website" .Permalink) "name" site.Title "url" .Permalink "inLanguage" site.Language.Locale "author" (dict "@id" (index $author "@id")) }}
+  {{- $profile := dict "@type" "ProfilePage" "url" .Permalink "name" .Title "description" .Description "inLanguage" site.Language.Locale "isPartOf" (dict "@id" (index $website "@id")) "mainEntity" (dict "@id" (index $author "@id")) }}
+  {{- with $og }}{{ $profile = merge $profile (dict "primaryImageOfPage" .) }}{{ end }}
+  {{- $graph = $graph | append $profile $author $website }}
+{{- else if ne .Kind "404" }}
+  {{- $items := slice (dict "@type" "ListItem" "position" 1 "name" (i18n "breadcrumb_home") "item" $home.Permalink) }}
+  {{- with .Parent }}{{ if not .IsHome }}{{ $items = $items | append (dict "@type" "ListItem" "position" 2 "name" .Title "item" .Permalink) }}{{ end }}{{ end }}
+  {{- $items = $items | append (dict "@type" "ListItem" "position" (add (len $items) 1) "name" .Title "item" .Permalink) }}
+  {{- $graph = $graph | append (dict "@type" "BreadcrumbList" "itemListElement" $items) }}
+  {{- if and .IsPage (eq .Section "posts") }}
+    {{- $post := dict
+      "@type" "BlogPosting"
+      "headline" .Title
+      "description" .Description
+      "url" .Permalink
+      "mainEntityOfPage" .Permalink
+      "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00")
+      "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")
+      "inLanguage" site.Language.Locale
+      "wordCount" .WordCount
+      "author" $author
+      "publisher" $author }}
+    {{- with .Params.tags }}{{ $post = merge $post (dict "keywords" .) }}{{ end }}
+    {{- with $og }}{{ $post = merge $post (dict "image" .) }}{{ end }}
+    {{- $graph = $graph | append $post }}
+  {{- end }}
+{{- end }}
+{{- if $graph }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify | safeJS }}</script>
+{{- end }}

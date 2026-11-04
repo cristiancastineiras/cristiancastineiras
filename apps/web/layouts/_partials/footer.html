@@ -1,0 +1,7 @@
+<footer class="site-footer">
+  <div class="wrap foot">
+    <p>© {{ now.Year }} {{ site.Params.author }}</p>
+    {{ partial "links.html" . }}
+  </div>
+  {{ with site.Params.goatcounter }}<p class="wrap legal">{{ i18n "footer_analytics" | safeHTML }}</p>{{ end }}
+</footer>

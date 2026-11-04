@@ -1,0 +1,58 @@
+[skip]
+other = "Saltar al contenido"
+[nav_main]
+other = "Principal"
+[nav_blog]
+other = "Blog"
+
+[at]
+other = "en"
+[photo_alt]
+other = "Foto de {{ . }}"
+[posts_title]
+other = "Posts"
+[all_posts]
+other = "Todos los posts"
+[no_posts]
+other = "Todavía no hay posts."
+[btn_back_home]
+other = "Volver al inicio"
+
+[min_read]
+one = "{{ .Count }} min de lectura"
+other = "{{ .Count }} min de lectura"
+
+[breadcrumb]
+other = "Ruta de navegación"
+[breadcrumb_home]
+other = "Inicio"
+[on_this_page]
+other = "En esta página"
+
+# Markdown
+[table]
+other = "Tabla"
+[copy]
+other = "Copiar"
+[copied]
+other = "Copiado"
+[alert_note]
+other = "Nota"
+[alert_tip]
+other = "Consejo"
+[alert_important]
+other = "Importante"
+[alert_warning]
+other = "Atención"
+[alert_caution]
+other = "Cuidado"
+
+[footer_tagline]
+other = "Desarrollador full stack en Pamplona, Navarra."
+[footer_analytics]
+other = "Esta web usa <a href=\"https://www.goatcounter.com/\" rel=\"noopener\">GoatCounter</a> para estadísticas de visitas anónimas: sin cookies ni datos personales."
+
+[nf_title]
+other = "Página no encontrada"
+[nf_text]
+other = "La página que buscas no existe o se ha movido."
