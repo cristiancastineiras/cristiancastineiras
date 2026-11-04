@@ -12,19 +12,45 @@ El patrón **Backend for Frontend (BFF)** nos ayudó a cambiar ese límite de co
 
 ## El flujo
 
-```text
-Navegador ── cookie de sesión ──> BFF ── access token ──> API
-                                      <── respuesta ──────
-             <── respuesta ──────
+```mermaid
+flowchart LR
+  accTitle: Arquitectura con BFF
+  accDescr: El navegador envía una cookie de sesión al BFF. El BFF busca los tokens en el almacén de sesiones y llama a la API con el access token. La respuesta vuelve por el mismo camino.
+  N[Navegador]
+  subgraph servidor [Servidor]
+    B[BFF]
+    S[(Tokens)]
+    B <--> S
+  end
+  A[API]
+  N <-- cookie --> B
+  B <-- access token --> A
 ```
 
 El navegador solo conoce una cookie de sesión. El BFF mantiene los tokens OAuth en el servidor, o en un almacén compartido protegido, y los añade a las peticiones que reenvía a las APIs.
 
-```text
-1. El usuario inicia sesión y completa OAuth con el proveedor de identidad.
-2. El BFF guarda los tokens asociados a una sesión del servidor.
-3. El navegador recibe una cookie de sesión HttpOnly, Secure y SameSite.
-4. La aplicación llama al BFF; el BFF valida la sesión y llama a la API.
+```mermaid {caption="Inicio de sesión con OAuth y una llamada posterior a la API a través del BFF."}
+sequenceDiagram
+  accTitle: Inicio de sesión y llamadas a través del BFF
+  accDescr: El usuario completa OAuth con el proveedor de identidad. El BFF canjea el código por tokens, los guarda en la sesión y entrega al navegador una cookie HttpOnly, Secure y SameSite. Después, el navegador llama al BFF con esa cookie; el BFF valida la sesión y llama a la API con el access token.
+  participant N as Navegador
+  participant B as BFF
+  participant I as Proveedor de identidad
+  participant A as API
+  N->>B: Iniciar sesión
+  B-->>N: Redirige al proveedor
+  N->>I: Se autentica
+  I-->>N: Redirige con un código
+  N->>B: Entrega el código
+  B->>I: Canjea el código por tokens
+  I-->>B: Tokens
+  Note over B: Guarda los tokens en la sesión
+  B-->>N: Cookie HttpOnly, Secure y SameSite
+  N->>B: Llamada con la cookie
+  Note over B: Valida la sesión
+  B->>A: Llamada con el access token
+  A-->>B: Respuesta
+  B-->>N: Respuesta
 ```
 
 Así evitamos que un token bearer de larga duración pase por el código del cliente. Si alguien consigue ejecutar JavaScript malicioso, ya no puede simplemente leer el access token y llevárselo para reproducirlo desde otro sitio.

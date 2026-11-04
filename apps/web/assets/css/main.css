@@ -248,6 +248,26 @@ code, kbd, pre { font-family: var(--mono); }
 .code pre code { padding: 0; background: none; font-size: inherit; }
 .prose .highlight { margin: 0; }
 
+/* Diagramas (render-codeblock-mermaid.html): con los tokens del sitio siguen el tema claro u oscuro sin redibujarse. */
+.diagram {
+  --pele-bg: var(--bg);
+  --pele-fg: var(--text);
+  --pele-muted: var(--muted);
+  --pele-line: var(--muted);
+  --pele-surface: var(--bg-soft);
+  --pele-surface-alt: var(--bg-soft);
+  --pele-border: var(--line-strong);
+  --pele-accent: var(--accent);
+  --pele-font: var(--font);
+  --pele-font-mono: var(--mono);
+  --pele-radius: 6px;
+}
+.diagram pre { margin: 0; overflow-x: auto; font-size: 0.875rem; }
+.diagram svg { display: block; margin-inline: auto; }
+/* Mientras carga no se enseña el código fuente; ocupa su sitio para que la página salte menos.
+   shortcut: si diagram.js no llega a cargar, el hueco queda en blanco; añadir un onerror al script si llega a pasar. */
+@media (scripting: enabled) { .diagram [data-diagram] { visibility: hidden; } }
+
 .prose hr { margin: 2.5em 0; border: 0; border-top: 1px solid var(--line); }
 .prose .table-wrap { margin: 1.5em 0; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
 .prose table { width: 100%; border-collapse: collapse; font-size: 0.925rem; line-height: 1.55; }

@@ -1,0 +1,10 @@
+{{- /* Diagrama: un bloque ```mermaid {caption="Pie opcional"} que dibuja assets/js/diagram.js con Pele.
+       La descripción para lectores de pantalla va en el propio diagrama, con accTitle y accDescr.
+       Sin JavaScript queda visible el código fuente del diagrama. */ -}}
+{{- .Page.Store.Set "hasDiagram" true -}}
+<figure class="diagram">
+  <pre data-diagram>{{ .Inner }}</pre>
+  {{- with .Attributes.caption }}
+  <figcaption>{{ . }}</figcaption>
+  {{- end }}
+</figure>
