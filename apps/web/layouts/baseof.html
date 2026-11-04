@@ -4,7 +4,7 @@
 {{ partial "head.html" . }}
 </head>
 <body{{ if and .IsPage (ge (len .Fragments.Identifiers) 3) }} class="wide"{{ end }}>
-<div class="site-watermark" aria-hidden="true"><img src="{{ "pixel/logo.svg" | relURL }}" alt=""></div>
+<div class="site-watermark" aria-hidden="true"><img src="{{ "pixel/logo.svg" | relURL }}" width="800" height="800" alt=""></div>
 <a class="skip" href="#main">{{ i18n "skip" }}</a>
 <div class="site-content">
 {{ partial "header.html" . }}

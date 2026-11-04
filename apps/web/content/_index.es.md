@@ -52,4 +52,12 @@ Aquí escribo sobre lo que aprendo por el camino, y cada vez más sobre cómo tr
 - automatización
 - rendimiento web
 - SEO técnico
+- Jenkins
+- PostgreSQL
+- Python
+- Symfony
+- Docker Compose
+- Kubernetes
+
+
 
