@@ -1,0 +1,13 @@
+{{- $page := . }}
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="{{ site.Home.RelPermalink }}">
+      <img src="{{ "pixel/logo.svg" | relURL }}" width="24" height="24" alt="">{{ site.Title }}
+    </a>
+    {{- with site.GetPage "/posts" }}
+    <nav aria-label="{{ i18n "nav_main" }}">
+      <a href="{{ .RelPermalink }}"{{ if or (eq $page .) ($page.IsDescendant .) }} aria-current="page"{{ end }}>{{ i18n "nav_blog" }}</a>
+    </nav>
+    {{- end }}
+  </div>
+</header>

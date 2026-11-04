@@ -1,0 +1,32 @@
+# Dependencias
+node_modules/
+.pnpm-store/
+
+# Cachés
+.turbo/
+.cache/
+*.log
+
+# Secretos
+.env
+.env.*
+!.env.example
+
+# Editores y sistema
+.idea/
+.history/
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+
+# Web (Hugo): salida compilada y caché de recursos
+apps/web/public/
+apps/web/resources/
+apps/web/.hugo_build.lock
+
+# Agentes de IA
+.ai/
+.agents/
+.claude/
+./skills-lock.json

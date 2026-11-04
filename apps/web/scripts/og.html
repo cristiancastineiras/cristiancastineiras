@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- Fuente de las imágenes para redes (assets/img/og-es.png y og-en.png, 1200×630). Se capturan con un navegador
+     headless a 1200×630: ver README. ?lang=en para la versión en inglés. -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: "Inter"; font-weight: 100 900; src: url("../static/fonts/inter-latin.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-weight: 100 900; src: url("../static/fonts/inter-latin-ext.woff2") format("woff2"); unicode-range: U+0100-02BA; }
+  @font-face { font-family: "Space Grotesk"; font-weight: 300 700; src: url("../static/fonts/space-grotesk-latin.woff2") format("woff2"); }
+  @font-face { font-family: "Space Grotesk"; font-weight: 300 700; src: url("../static/fonts/space-grotesk-latin-ext.woff2") format("woff2"); unicode-range: U+0100-02BA; }
+  * { box-sizing: border-box; margin: 0; }
+  body { width: 1200px; height: 630px; overflow: hidden; position: relative; background: #fff; color: #14171c; font-family: "Inter", sans-serif; }
+  .face { position: absolute; right: 88px; top: 50%; transform: translateY(-50%); width: 300px; height: 300px; overflow: hidden; border-radius: 28px; display: grid; place-items: center; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect x='2' y='2' width='12' height='12' fill='%23000' opacity='.06'/%3E%3C/svg%3E"), #dafbe1; box-shadow: 0 0 0 1px #e3e7ec, 0 30px 60px -24px rgb(16 24 40 / 0.3); }
+  .face span { font: 700 128px "Space Grotesk"; letter-spacing: -0.04em; color: #1a7f37; }
+  .face img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  main { position: absolute; left: 88px; top: 84px; width: 680px; }
+  .logo { display: block; width: 104px; height: 104px; image-rendering: pixelated; }
+  .eyebrow { margin-top: 40px; font: 600 26px "Space Grotesk"; color: #1a7f37; letter-spacing: 0.01em; }
+  h1 { margin-top: 10px; font: 700 72px/1.02 "Space Grotesk"; letter-spacing: -0.035em; }
+  .lead { margin-top: 18px; font: 400 34px/1.3 "Inter"; color: #566070; letter-spacing: -0.01em; }
+  .stripe { margin-top: 44px; display: flex; gap: 8px; }
+  .stripe i { width: 14px; height: 14px; }
+  .url { position: absolute; left: 88px; bottom: 64px; font: 500 24px ui-monospace, "Cascadia Code", Consolas, monospace; color: #566070; }
+</style>
+</head>
+<body>
+<div class="face"><img alt="" hidden><span>CC</span></div>
+<main>
+  <img class="logo" src="../static/pixel/logo.svg" alt="">
+  <p class="eyebrow" data-es="Desarrollador full stack · Pamplona, Navarra" data-en="Full stack developer · Pamplona, Spain"></p>
+  <h1>Cristian Arana Castiñeiras</h1>
+  <p class="lead" data-es="Sistemas .NET a gran escala, frontales en React, CI/CD y observabilidad." data-en="Large-scale .NET systems, React front ends, CI/CD and observability."></p>
+  <div class="stripe"><i style="background:#2253CE"></i><i style="background:#00AEFF"></i><i style="background:#8C48FF"></i><i style="background:#F2598A"></i></div>
+</main>
+<p class="url">github.com/cristiancastineiras</p>
+<script>
+  const lang = new URLSearchParams(location.search).get("lang") === "en" ? "en" : "es";
+  document.documentElement.lang = lang;
+  for (const el of document.querySelectorAll("[data-es]")) el.textContent = el.dataset[lang];
+  // La foto del hero (assets/img/avatar.*) si existe; si no, quedan las iniciales, como en la web.
+  const img = document.querySelector(".face img");
+  const exts = ["jpg", "jpeg", "png", "webp"];
+  const next = () => { const ext = exts.shift(); if (ext) img.src = `../assets/img/avatar.${ext}`; };
+  img.onerror = next;
+  img.onload = () => { img.hidden = false; };
+  next();
+</script>
+</body>
+</html>

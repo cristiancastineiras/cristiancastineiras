@@ -1,0 +1,28 @@
+{{ define "main" }}
+{{- $isPost := eq .Section "posts" }}
+{{- /* Índice solo en páginas largas: con una o dos secciones sobra. main.js resalta la sección en la que estás. */}}
+{{- $toc := ge (len .Fragments.Identifiers) 3 }}
+<article class="wrap post{{ if $toc }} has-toc{{ end }}">
+  <header class="post-head">
+    <nav class="crumbs" aria-label="{{ i18n "breadcrumb" }}">
+      <a href="{{ site.Home.RelPermalink }}">{{ i18n "breadcrumb_home" }}</a>
+      {{- with .Parent }}{{ if not .IsHome }}<span aria-hidden="true">/</span><a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}{{ end }}
+    </nav>
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
+    {{ if $isPost }}<p class="post-meta">{{ partial "post-meta.html" . }}</p>{{ end }}
+  </header>
+  {{- if $toc }}
+  <details class="toc" data-toc>
+    <summary>{{ i18n "on_this_page" }}</summary>
+    {{ replace .TableOfContents `<nav id="TableOfContents">` (printf `<nav id="TableOfContents" aria-label="%s">` (i18n "on_this_page")) | safeHTML }}
+  </details>
+  {{- end }}
+  <div class="prose post-body">
+    {{ .Content }}
+  </div>
+  {{- with .Parent }}{{ if not .IsHome }}
+  <footer class="post-foot"><a href="{{ .RelPermalink }}">← {{ i18n "all_posts" }}</a></footer>
+  {{- end }}{{ end }}
+</article>
+{{ end }}

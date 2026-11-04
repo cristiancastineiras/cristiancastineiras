@@ -1,0 +1,12 @@
+{
+  "name": "web",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Portfolio y blog (Hugo, sin tema externo).",
+  "scripts": {
+    "dev": "hugo server --buildDrafts",
+    "build": "hugo --gc --cleanDestinationDir",
+    "clean": "node -e \"for (const d of ['public','resources']) require('node:fs').rmSync(d,{recursive:true,force:true})\"",
+    "pixel": "node scripts/make-pixel-logo.mjs"
+  }
+}

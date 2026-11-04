@@ -1,0 +1,5 @@
+{{- /* {{< shot src="captura.png" alt="…" caption="…" narrow="true" >}}: imagen del bundle del post (o de assets/img/) con pie. */ -}}
+<figure{{ if .Get "narrow" }} class="narrow-shot"{{ end }}>
+  {{ partial "img.html" (dict "src" (.Get "src") "page" .Page "alt" (.Get "alt") "sizes" "(min-width: 760px) 720px, 92vw") }}
+  {{ with .Get "caption" }}<figcaption>{{ . }}</figcaption>{{ end }}
+</figure>

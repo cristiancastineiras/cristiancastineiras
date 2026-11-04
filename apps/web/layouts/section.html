@@ -1,0 +1,17 @@
+{{ define "main" }}
+<div class="wrap page">
+  <header class="page-head">
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
+  </header>
+  {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+  {{- range .Pages.GroupByDate "2006" }}
+  <section class="year" aria-labelledby="y{{ .Key }}">
+    <h2 id="y{{ .Key }}">{{ .Key }}</h2>
+    {{ partial "post-list.html" .Pages }}
+  </section>
+  {{- else }}
+  <p class="muted">{{ i18n "no_posts" }}</p>
+  {{- end }}
+</div>
+{{ end }}

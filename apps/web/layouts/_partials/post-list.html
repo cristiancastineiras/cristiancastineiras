@@ -1,0 +1,16 @@
+{{- /* Lista de posts: fecha a la izquierda, título y entradilla a la derecha. Recibe páginas de content/posts/. */ -}}
+{{- if . }}
+<ol class="post-list">
+  {{- range . }}
+  <li>
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time>
+    <div>
+      <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+      {{ with .Description | default (.Summary | plainify) }}<p>{{ . | truncate 180 }}</p>{{ end }}
+    </div>
+  </li>
+  {{- end }}
+</ol>
+{{- else }}
+<p class="muted">{{ i18n "no_posts" }}</p>
+{{- end }}

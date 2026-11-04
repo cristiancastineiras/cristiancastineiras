@@ -1,0 +1,14 @@
+{{- /* Citas y callouts. `> [!NOTE]`, `> [!TIP] Título propio`… (sintaxis de GitHub y Obsidian). Los tipos que no
+       están en i18n (alert_*) usan su nombre como título y el estilo de nota. */ -}}
+{{- if eq .Type "alert" }}
+{{- $type := lower .AlertType }}
+{{- $known := in (slice "note" "tip" "important" "warning" "caution") $type }}
+<div class="callout callout-{{ cond $known $type "note" }}">
+  <p class="callout-title">{{ .AlertTitle | default (cond $known (i18n (printf "alert_%s" $type)) (title $type)) }}</p>
+  {{ .Text }}
+</div>
+{{- else }}
+<blockquote>
+  {{ .Text }}
+</blockquote>
+{{- end }}

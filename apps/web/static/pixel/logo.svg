@@ -1,0 +1,38 @@
+<svg role="img" aria-label="Herdr con tiles de OpenIron" xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 64 64" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <g id="tile">
+      <rect x=".25" y=".25" width="1.5" height="1.5" fill="#000" opacity=".1"/>
+      <rect x=".25" y=".25" width=".75" height=".75" fill="#2c2c2c" opacity=".1"/>
+    </g>
+    <pattern id="tile-relief" width="8" height="8" patternUnits="userSpaceOnUse">
+      <use href="#tile" transform="rotate(90 1 1)"/>
+      <use href="#tile" transform="translate(2 0) rotate(270 1 1)"/>
+      <use href="#tile" transform="translate(4 0) rotate(180 1 1)"/>
+      <use href="#tile" transform="translate(6 0)"/>
+      <use href="#tile" transform="translate(0 2) rotate(180 1 1)"/>
+      <use href="#tile" transform="translate(2 2)"/>
+      <use href="#tile" transform="translate(4 2) rotate(90 1 1)"/>
+      <use href="#tile" transform="translate(6 2) rotate(270 1 1)"/>
+      <use href="#tile" transform="translate(0 4) rotate(270 1 1)"/>
+      <use href="#tile" transform="translate(2 4) rotate(90 1 1)"/>
+      <use href="#tile" transform="translate(4 4)"/>
+      <use href="#tile" transform="translate(6 4) rotate(180 1 1)"/>
+      <use href="#tile" transform="translate(0 6)"/>
+      <use href="#tile" transform="translate(2 6) rotate(180 1 1)"/>
+      <use href="#tile" transform="translate(4 6) rotate(270 1 1)"/>
+      <use href="#tile" transform="translate(6 6) rotate(90 1 1)"/>
+    </pattern>
+    <clipPath id="herdr-outline" clipPathUnits="userSpaceOnUse">
+      <use href="#herdr-mark"/>
+    </clipPath>
+  </defs>
+  <g id="herdr" fill="currentColor" stroke="none">
+    <path id="herdr-mark" fill-rule="evenodd" clip-rule="evenodd" d="
+      M18.4 6L21.6 6Q22 6 22 6.4L22 7.6Q22 8 21.6 8L20 8L20 9.6Q20 10 19.6 10L16.4 10Q16 10 16 9.6L16 8.4Q16 8 16.4 8L18 8L18 6.4Q18 6 18.4 6Z
+      M26.4 6L33.6 6Q34 6 34 6.4L34 8L37.6 8Q38 8 38 8.4L38 12L39.6 12Q40 12 40 12.4L40 19.6Q40 20 39.6 20L38 20L38 23.6Q38 24 37.6 24L34 24L34 25.6Q34 26 33.6 26L30.4 26Q30 26 30 25.6L30 24L28.4 24Q28 24 28 23.6L28 20.4Q28 20 28.4 20L29.6 20Q30 20 30 20.4L30 22L32 22L32 20.4Q32 20 32.4 20L34 20L34 14L32.4 14Q32 14 32 13.6L32 12L24.4 12Q24 12 24 11.6L24 8.4Q24 8 24.4 8L26 8L26 6.4Q26 6 26.4 6Z
+      M40.4 20L42 20L42 14.4Q42 14 42.4 14L43.6 14Q44 14 44 14.4L44 16L46 16L46 14.4Q46 14 46.4 14L51.6 14Q52 14 52 14.4L52 16L58 16L58 14.4Q58 14 58.4 14L59.6 14Q60 14 60 14.4L60 57.6Q60 58 59.6 58L30.4 58Q30 58 30 57.6L30 56L28.4 56Q28 56 28 55.6L28 54L24.4 54Q24 54 24 53.6L24 52L22.4 52Q22 52 22 51.6L22 42L20.4 42Q20 42 20 41.6L20 36L18.4 36Q18 36 18 35.6L18 34L16.4 34Q16 34 16 33.6L16 32L8.4 32Q8 32 8 31.6L8 30L4.4 30Q4 30 4 29.6L4 20.4Q4 20 4.4 20L6 20L6 18.4Q6 18 6.4 18L8 18L8 16.4Q8 16 8.4 16L12 16L12 14.4Q12 14 12.4 14L14 14L14 12.4Q14 12 14.4 12L21.6 12Q22 12 22 12.4L22 14L31.6 14Q32 14 32 14.4L32 19.6Q32 20 31.6 20L30.4 20Q30 20 30 19.6L30 18L26 18L26 23.6Q26 24 26.4 24L27.6 24Q28 24 28 24.4L28 28L38 28L38 24.4Q38 24 38.4 24L40 24L40 20.4Q40 20 40.4 20Z
+      M12 18L12 20L13.6 20Q14 20 14 20.4L14 21.6Q14 22 13.6 22L12 22L12 24L16 24L16 22.4Q16 22 16.4 22L18 22L18 20L16.4 20Q16 20 16 19.6L16 18L12 18Z
+      M20 20H24V22H20Z"/>
+  </g>
+  <rect width="64" height="64" fill="url(#tile-relief)" clip-path="url(#herdr-outline)"/>
+</svg>

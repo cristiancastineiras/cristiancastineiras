@@ -1,0 +1,3 @@
+{{- /* Títulos con ancla: el # aparece al pasar por encima, como en Obsidian. Es un atajo para copiar el enlace, no
+       contenido, así que queda fuera del árbol de accesibilidad y del orden de tabulación. */ -}}
+<h{{ .Level }} id="{{ .Anchor }}">{{ .Text }}{{ if ge .Level 2 }}<a class="anchor" href="#{{ .Anchor }}" aria-hidden="true" tabindex="-1">#</a>{{ end }}</h{{ .Level }}>

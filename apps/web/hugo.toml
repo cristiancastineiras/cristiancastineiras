@@ -1,0 +1,61 @@
+# Blog personal (Hugo, sin tema externo: todo está en layouts/ y assets/). Solo en español.
+# En local:  pnpm dev   (o `hugo server` dentro de apps/web)
+baseURL = "https://example.com/"
+title = "Cristian Arana Castiñeiras"
+defaultContentLanguage = "es"
+
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term"]
+
+[languages.es]
+  label = "Español"
+  locale = "es"
+
+[params]
+  author = "Cristian Arana Castiñeiras"
+  # Cargo y empresa, en la cabecera de la portada y en los datos para buscadores.
+  role = "Desarrollador full stack"
+  worksFor = "Tracasa Instrumental"
+  # Ubicación (portada y JSON-LD).
+  locality = "Pamplona"
+  region = "Navarra"
+  country = "ES"
+  # Enlaces de contacto. Vacío = no se muestra.
+  github = "cristiancastineiras"
+  linkedin = "cristian-arana-casti%C3%B1eiras-758278239"
+  email = "cristianaranacastineiras@gmail.com"
+  # Imagen para redes (1200×630, en assets/ o static/). Se regenera con scripts/og.html (ver README).
+  ogImage = "img/og-es.png"
+  # Analítica sin cookies (https://<nombre>.goatcounter.com). Vacío = sin analítica.
+  goatcounter = ""
+  # Verificación de propiedad en buscadores (opcionales).
+  googleVerification = ""
+  bingVerification = ""
+
+[markup.goldmark.renderer]
+  unsafe = false
+
+# Imágenes sueltas sin <p> alrededor, para que render-image.html las convierta en figura
+[markup.goldmark.parser]
+  wrapStandAloneImageWithinParagraph = false
+
+# ==resaltado== como en Obsidian
+[markup.goldmark.extensions.extras.mark]
+  enable = true
+
+[markup.highlight]
+  noClasses = false
+
+[markup.tableOfContents]
+  startLevel = 2
+  endLevel = 2
+
+[minify]
+  minifyOutput = true
+
+[sitemap]
+  changefreq = "monthly"
+  priority = 0.7
+
+[imaging.webp]
+  quality = 82

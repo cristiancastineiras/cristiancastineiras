@@ -1,0 +1,9 @@
+{{- /* Imágenes de Markdown. Sueltas en su propio párrafo son una figura (el título, entre comillas tras la ruta, es el
+       pie de foto); si están en el bundle del post salen en WebP a varios anchos con img.html. */ -}}
+{{- if .IsBlock }}<figure>{{ end -}}
+{{- if .PageInner.Resources.Get .Destination }}
+{{- partial "img.html" (dict "src" .Destination "page" .PageInner "alt" .PlainText "sizes" "(min-width: 760px) 720px, 92vw") }}
+{{- else -}}
+<img src="{{ .Destination }}" alt="{{ .PlainText }}" loading="lazy" decoding="async">
+{{- end }}
+{{- if .IsBlock }}{{ with .Title }}<figcaption>{{ . }}</figcaption>{{ end }}</figure>{{ end -}}

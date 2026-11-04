@@ -1,0 +1,28 @@
+{{ define "main" }}
+<div class="wrap page">
+  <header class="profile">
+    <div class="avatar">
+      {{- with resources.GetMatch "img/avatar.*" }}
+      {{ partial "img.html" (dict "src" (path.Base .Name) "alt" (i18n "photo_alt" site.Params.author) "sizes" "120px" "eager" true) }}
+      {{- else }}
+      <span role="img" aria-label="{{ i18n "photo_alt" site.Params.author }}">CC</span>
+      {{- end }}
+    </div>
+    <div>
+      <h1>{{ site.Params.author }}</h1>
+      <p class="profile-role">{{ site.Params.role }}{{ with site.Params.worksFor }} {{ i18n "at" }} {{ . }}{{ end }}</p>
+      {{ with site.Params.locality }}<p class="profile-place">{{ . }}{{ with site.Params.region }}, {{ . }}{{ end }}</p>{{ end }}
+    </div>
+  </header>
+  {{ partial "links.html" . }}
+  <div class="prose bio">{{ .Content }}</div>
+
+  {{- with site.GetPage "/posts" }}
+  <section class="home-posts" aria-labelledby="posts-title">
+    <h2 id="posts-title">{{ i18n "posts_title" }}</h2>
+    {{ partial "post-list.html" (first 10 .Pages) }}
+    {{ if gt (len .Pages) 10 }}<p><a href="{{ .RelPermalink }}">{{ i18n "all_posts" }} →</a></p>{{ end }}
+  </section>
+  {{- end }}
+</div>
+{{ end }}

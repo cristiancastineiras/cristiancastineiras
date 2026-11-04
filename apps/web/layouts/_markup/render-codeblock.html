@@ -1,0 +1,6 @@
+{{- /* Bloque de código con barra: lenguaje y botón de copiar (main.js lo muestra; sin JS no aparece). */ -}}
+{{- $result := transform.HighlightCodeBlock . }}
+<div class="code">
+  <div class="code-bar"><span>{{ .Type | default "texto" }}</span><button class="code-copy" type="button" aria-live="polite" data-copied="{{ i18n "copied" }}" hidden>{{ i18n "copy" }}</button></div>
+  {{ $result.Wrapped }}
+</div>

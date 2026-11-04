@@ -1,0 +1,7 @@
+{{- /* Enlaces de contacto (portada y pie). Los que estén vacíos en hugo.toml no salen. */ -}}
+<ul class="links">
+  {{- with site.Params.github }}<li><a href="https://github.com/{{ . }}" rel="me noopener">{{ partial "icon.html" "github" }}GitHub</a></li>{{ end }}
+  {{- with site.Params.linkedin }}<li><a href="https://www.linkedin.com/in/{{ . }}/" rel="me noopener">{{ partial "icon.html" "linkedin" }}LinkedIn</a></li>{{ end }}
+  {{- with site.Params.email }}<li><a href="mailto:{{ . }}">{{ partial "icon.html" "mail" }}{{ . }}</a></li>{{ end }}
+  {{- with site.GetPage "/posts" }}{{ with .OutputFormats.Get "rss" }}<li><a href="{{ .RelPermalink }}">{{ partial "icon.html" "rss" }}RSS</a></li>{{ end }}{{ end }}
+</ul>

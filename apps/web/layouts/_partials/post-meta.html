@@ -1,0 +1,1 @@
+<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_long" }}</time><span aria-hidden="true">·</span><span>{{ i18n "min_read" .ReadingTime }}</span>{{ with .Params.tags }}<span aria-hidden="true">·</span><span>{{ delimit . ", " }}</span>{{ end }}
