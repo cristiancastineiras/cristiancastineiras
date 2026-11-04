@@ -4,12 +4,15 @@
 {{ partial "head.html" . }}
 </head>
 <body{{ if and .IsPage (ge (len .Fragments.Identifiers) 3) }} class="wide"{{ end }}>
+<div class="site-watermark" aria-hidden="true"><img src="{{ "pixel/logo.svg" | relURL }}" alt=""></div>
 <a class="skip" href="#main">{{ i18n "skip" }}</a>
+<div class="site-content">
 {{ partial "header.html" . }}
 <main id="main" tabindex="-1">
 {{ block "main" . }}{{ end }}
 </main>
 {{ partial "footer.html" . }}
+</div>
 {{ with resources.Get "js/main.js" | minify | fingerprint }}<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>{{ end }}
 {{ with site.Params.goatcounter }}<script data-goatcounter="https://{{ . }}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>{{ end }}
 </body>
