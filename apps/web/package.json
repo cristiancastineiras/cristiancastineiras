@@ -4,7 +4,7 @@
   "private": true,
   "description": "Portfolio y blog (Hugo, sin tema externo).",
   "scripts": {
-    "dev": "hugo server --buildDrafts",
+    "dev": "hugo server --buildDrafts --baseURL http://localhost:1313/",
     "build": "hugo --gc --cleanDestinationDir",
     "clean": "node -e \"for (const d of ['public','resources']) require('node:fs').rmSync(d,{recursive:true,force:true})\"",
     "pixel": "node scripts/make-pixel-logo.mjs"

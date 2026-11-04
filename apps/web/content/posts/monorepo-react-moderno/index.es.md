@@ -1,5 +1,6 @@
 ---
 title: "Cómo monté mi monorepo React moderno y por qué deberías considerarlo"
+seoTitle: "Monorepo React con Turborepo"
 description: "La arquitectura, las herramientas y las decisiones detrás de una plantilla React con pnpm, Turborepo, Vite, TypeScript, Biome y paquetes reutilizables."
 date: 2026-02-02
 tags: ["React", "Monorepo", "Vite", "Arquitectura frontend"]

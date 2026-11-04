@@ -2,42 +2,58 @@
        artículo en los posts. La imagen la resuelve head.html (.Store "og"). */ -}}
 {{- $home := site.Home }}
 {{- $og := .Store.Get "og" }}
+{{- $description := .Store.Get "description" }}
 {{- $sameAs := slice }}
 {{- with site.Params.github }}{{ $sameAs = $sameAs | append (printf "https://github.com/%s" .) }}{{ end }}
 {{- with site.Params.linkedin }}{{ $sameAs = $sameAs | append (printf "https://www.linkedin.com/in/%s/" .) }}{{ end }}
-{{- $author := dict "@type" "Person" "@id" (printf "%s#person" $home.Permalink) "name" site.Params.author "url" $home.Permalink "sameAs" $sameAs }}
+{{- $author := dict "@type" "Person" "@id" (printf "%s#person" $home.Permalink) "name" site.Params.author "description" $home.Description "url" $home.Permalink "sameAs" $sameAs }}
+{{- with site.Params.github }}{{ $author = merge $author (dict "alternateName" .) }}{{ end }}
 {{- with site.Params.role }}{{ $author = merge $author (dict "jobTitle" .) }}{{ end }}
 {{- with site.Params.worksFor }}{{ $author = merge $author (dict "worksFor" (dict "@type" "Organization" "name" .)) }}{{ end }}
 {{- with site.Params.locality }}{{ $author = merge $author (dict "address" (dict "@type" "PostalAddress" "addressLocality" . "addressRegion" site.Params.region "addressCountry" site.Params.country)) }}{{ end }}
 {{- with resources.GetMatch "img/avatar.*" }}{{ $author = merge $author (dict "image" .Permalink) }}{{ end }}
 {{- $graph := slice }}
-{{- if .IsHome }}
-  {{- $website := dict "@type" "WebSite" "@id" (printf "%s#website" .Permalink) "name" site.Title "url" .Permalink "inLanguage" site.Language.Locale "author" (dict "@id" (index $author "@id")) }}
-  {{- $profile := dict "@type" "ProfilePage" "url" .Permalink "name" .Title "description" .Description "inLanguage" site.Language.Locale "isPartOf" (dict "@id" (index $website "@id")) "mainEntity" (dict "@id" (index $author "@id")) }}
-  {{- with $og }}{{ $profile = merge $profile (dict "primaryImageOfPage" .) }}{{ end }}
-  {{- $graph = $graph | append $profile $author $website }}
-{{- else if ne .Kind "404" }}
+{{- if and (ne .Kind "404") (not .Draft) }}
+  {{- $authorRef := dict "@id" (index $author "@id") }}
+  {{- $website := dict "@type" "WebSite" "@id" (printf "%s#website" $home.Permalink) "name" site.Title "url" $home.Permalink "description" $home.Description "inLanguage" site.Language.Locale "author" $authorRef "publisher" $authorRef }}
+  {{- $pageType := "WebPage" }}
+  {{- if .IsHome }}{{ $pageType = "ProfilePage" }}{{ else if .IsSection }}{{ $pageType = "CollectionPage" }}{{ end }}
+  {{- $page := dict "@type" $pageType "@id" (printf "%s#webpage" .Permalink) "url" .Permalink "name" .Title "description" $description "inLanguage" site.Language.Locale "isPartOf" (dict "@id" (index $website "@id")) }}
+  {{- if not .Lastmod.IsZero }}{{ $page = merge $page (dict "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")) }}{{ end }}
+  {{- with $og }}{{ $page = merge $page (dict "primaryImageOfPage" (dict "@type" "ImageObject" "url" .)) }}{{ end }}
+  {{- if .IsHome }}
+    {{- $page = merge $page (dict "mainEntity" $authorRef) }}
+  {{- else }}
   {{- $items := slice (dict "@type" "ListItem" "position" 1 "name" (i18n "breadcrumb_home") "item" $home.Permalink) }}
   {{- with .Parent }}{{ if not .IsHome }}{{ $items = $items | append (dict "@type" "ListItem" "position" 2 "name" .Title "item" .Permalink) }}{{ end }}{{ end }}
   {{- $items = $items | append (dict "@type" "ListItem" "position" (add (len $items) 1) "name" .Title "item" .Permalink) }}
-  {{- $graph = $graph | append (dict "@type" "BreadcrumbList" "itemListElement" $items) }}
+  {{- $breadcrumbID := printf "%s#breadcrumb" .Permalink }}
+  {{- $page = merge $page (dict "breadcrumb" (dict "@id" $breadcrumbID)) }}
+  {{- $graph = $graph | append (dict "@type" "BreadcrumbList" "@id" $breadcrumbID "itemListElement" $items) }}
   {{- if and .IsPage (eq .Section "posts") }}
+    {{- $articleID := printf "%s#article" .Permalink }}
+    {{- $page = merge $page (dict "mainEntity" (dict "@id" $articleID)) }}
     {{- $post := dict
       "@type" "BlogPosting"
+      "@id" $articleID
       "headline" .Title
-      "description" .Description
+      "description" $description
       "url" .Permalink
-      "mainEntityOfPage" .Permalink
+      "mainEntityOfPage" (dict "@id" (index $page "@id"))
+      "isPartOf" (dict "@id" (index $website "@id"))
       "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00")
       "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")
       "inLanguage" site.Language.Locale
       "wordCount" .WordCount
-      "author" $author
-      "publisher" $author }}
+      "timeRequired" (printf "PT%dM" .ReadingTime)
+      "author" $authorRef
+      "publisher" $authorRef }}
     {{- with .Params.tags }}{{ $post = merge $post (dict "keywords" .) }}{{ end }}
     {{- with $og }}{{ $post = merge $post (dict "image" .) }}{{ end }}
     {{- $graph = $graph | append $post }}
   {{- end }}
+  {{- end }}
+  {{- $graph = $graph | append $page $author $website }}
 {{- end }}
 {{- if $graph }}
 <script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify | safeJS }}</script>

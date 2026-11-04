@@ -1,6 +1,7 @@
 ---
 title: "Cómo montar tu propia mini nube con Linux, Docker y Cloudflare Tunnel"
-description: "Una guía práctica para publicar servicios desde un ordenador doméstico con Docker Compose, Cloudflare Tunnel y Linux, sin abrir puertos y con un coste cercano a cero."
+seoTitle: "Docker y Cloudflare Tunnel"
+description: "Publica servicios desde casa con Linux, Docker Compose y Cloudflare Tunnel: una guía práctica para montar tu propia mini nube sin abrir puertos en el router."
 date: 2026-11-04
 tags: ["Docker", "Linux", "Cloudflare", "Homelab"]
 ---

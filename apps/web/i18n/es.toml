@@ -21,6 +21,8 @@ other = "Volver al inicio"
 [min_read]
 one = "{{ .Count }} min de lectura"
 other = "{{ .Count }} min de lectura"
+[last_updated]
+other = "Actualizado:"
 
 [breadcrumb]
 other = "Ruta de navegación"

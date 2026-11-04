@@ -1,4 +1,4 @@
-{{- /* Imagen del bundle de la página (page) o de assets/img/: WebP a varios anchos (sin ampliar) con width/height para evitar saltos de maquetación.
+{{- /* Imagen del bundle de la página (page) o de assets/img/: AVIF y WebP a varios anchos (sin ampliar) con width/height para evitar saltos de maquetación.
        Argumentos: src, alt, page (opcional), sizes (opcional), eager (opcional, para la imagen que se ve al cargar). */ -}}
 {{- $sizes := .sizes | default "(min-width: 900px) 560px, 92vw" }}
 {{- with or (and .page (.page.Resources.Get .src)) (resources.Get (printf "img/%s" .src)) }}
@@ -8,13 +8,19 @@
 {{- range slice 480 800 }}{{ if lt . $max }}{{ $specs = $specs | append (printf "%dx webp" .) }}{{ end }}{{ end }}
 {{- $specs = $specs | append (printf "%dx webp" $max) }}
 {{- $set := slice }}
+{{- $avifSet := slice }}
 {{- $last := "" }}
 {{- range $specs }}
 {{- $r := $img.Resize . }}
 {{- $set = $set | append (printf "%s %dw" $r.RelPermalink $r.Width) }}
+{{- $avif := $img.Resize (replace . "webp" "avif") }}
+{{- $avifSet = $avifSet | append (printf "%s %dw" $avif.RelPermalink $avif.Width) }}
 {{- $last = $r }}
 {{- end }}
+<picture>
+<source type="image/avif" srcset="{{ delimit $avifSet ", " }}" sizes="{{ $sizes }}">
 <img src="{{ $last.RelPermalink }}" srcset="{{ delimit $set ", " }}" sizes="{{ $sizes }}" width="{{ $last.Width }}" height="{{ $last.Height }}" alt="{{ $.alt }}" decoding="async"{{ if $.eager }} fetchpriority="high"{{ else }} loading="lazy"{{ end }}>
+</picture>
 {{- else }}
 {{- errorf "img.html: %s not found in the page bundle or assets/img/" .src }}
 {{- end }}

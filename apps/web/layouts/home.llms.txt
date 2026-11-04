@@ -1,0 +1,18 @@
+# {{ site.Title }}
+
+> {{ site.Home.Description | plainify }}
+
+## Perfil
+
+- [{{ site.Params.author }}]({{ site.Home.Permalink }}): {{ site.Params.role }}.
+
+## Posts
+{{ range (where (where site.RegularPages "Section" "posts") "Draft" false).ByDate.Reverse }}
+- [{{ .Title }}]({{ .Permalink }}): {{ .Description | plainify }}
+{{ end }}
+## Recursos
+{{ with site.GetPage "/posts" }}
+- [Blog]({{ .Permalink }})
+{{ with .OutputFormats.Get "RSS" }}- [RSS]({{ .Permalink }}){{ end }}
+{{ end }}
+- [Sitemap]({{ "sitemap.xml" | absURL }})

@@ -1,7 +1,7 @@
 {{- /* Imágenes de Markdown. Sueltas en su propio párrafo son una figura (el título, entre comillas tras la ruta, es el
-       pie de foto); si están en el bundle del post salen en WebP a varios anchos con img.html. */ -}}
+       pie de foto); las del bundle o de assets/img/ salen en AVIF y WebP a varios anchos con img.html. */ -}}
 {{- if .IsBlock }}<figure>{{ end -}}
-{{- if .PageInner.Resources.Get .Destination }}
+{{- if or (.PageInner.Resources.Get .Destination) (resources.Get (printf "img/%s" .Destination)) }}
 {{- partial "img.html" (dict "src" .Destination "page" .PageInner "alt" .PlainText "sizes" "(min-width: 760px) 720px, 92vw") }}
 {{- else -}}
 <img src="{{ .Destination }}" alt="{{ .PlainText }}" loading="lazy" decoding="async">

@@ -1,5 +1,6 @@
 ---
 title: "Agentes de programación con IA en 2027: skills, comandos, plugins y hooks explicados"
+seoTitle: "Agentes de IA en 2027: guía"
 description: "Un modelo mental para entender reglas, comandos, skills, subagentes, MCP, hooks y plugins: qué controla cada pieza, quién la activa y cuándo es solo ruido."
 date: 2026-11-03
 tags: ["IA", "Agentes", "MCP", "Productividad"]

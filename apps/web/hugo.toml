@@ -1,11 +1,30 @@
 # Blog personal (Hugo, sin tema externo: todo está en layouts/ y assets/). Solo en español.
 # En local:  pnpm dev   (o `hugo server` dentro de apps/web)
-baseURL = "https://example.com/"
+baseURL = "https://cristiancastineiras.github.io/cristiancastineiras/"
 title = "Cristian Arana Castiñeiras"
 defaultContentLanguage = "es"
 
 enableRobotsTXT = true
+enableGitInfo = true
 disableKinds = ["taxonomy", "term"]
+
+[frontmatter]
+  lastmod = ["lastmod", ":git", "date", "publishDate"]
+
+[outputs]
+  home = ["HTML", "RSS", "LLMS", "HUMANS"]
+
+[outputFormats.LLMS]
+  mediaType = "text/plain"
+  baseName = "llms"
+  isPlainText = true
+  notAlternative = true
+
+[outputFormats.HUMANS]
+  mediaType = "text/plain"
+  baseName = "humans"
+  isPlainText = true
+  notAlternative = true
 
 [languages.es]
   label = "Español"
@@ -52,10 +71,6 @@ disableKinds = ["taxonomy", "term"]
 
 [minify]
   minifyOutput = true
-
-[sitemap]
-  changefreq = "monthly"
-  priority = 0.7
 
 [imaging.webp]
   quality = 82

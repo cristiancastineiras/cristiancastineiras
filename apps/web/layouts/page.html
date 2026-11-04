@@ -10,7 +10,17 @@
     </nav>
     <h1>{{ .Title }}</h1>
     {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
-    {{ if $isPost }}<p class="post-meta">{{ partial "post-meta.html" . }}</p>{{ end }}
+    {{ if $isPost }}
+    <p class="post-meta">
+      <a href="{{ site.Home.RelPermalink }}" rel="author">{{ site.Params.author }}</a>
+      <span aria-hidden="true">·</span>
+      {{ partial "post-meta.html" . }}
+      {{ if gt .Lastmod.Unix .Date.Unix }}
+      <span aria-hidden="true">·</span>
+      <span>{{ i18n "last_updated" }} <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod | time.Format ":date_long" }}</time></span>
+      {{ end }}
+    </p>
+    {{ end }}
   </header>
   {{- if $toc }}
   <details class="toc" data-toc>

@@ -2,24 +2,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {{- $desc := .Description | default site.Home.Description | default (i18n "footer_tagline") }}
 {{- $isPost := and .IsPage (eq .Section "posts") }}
+{{- $pageTitle := .Params.seoTitle | default .Title }}
+{{- $title := $pageTitle }}
+{{- if not .IsHome }}{{ $title = printf "%s | %s" (cond (eq .Kind "404") (i18n "nf_title") $pageTitle) site.Title }}{{ end }}
 {{- /* Imagen para redes: `image` del front matter (un archivo del bundle, de assets/ o de static/) o, si no, ogImage. */ -}}
 {{- $og := "" }}{{ $ogImg := false }}
 {{- with .Params.image | default site.Params.ogImage }}
   {{- with $.Resources.Get . | default (resources.Get .) }}{{ $ogImg = . }}{{ $og = .Permalink }}{{ else }}{{ $og = absURL . }}{{ end }}
 {{- end }}
 {{- .Store.Set "og" $og }}
-<title>{{ if .IsHome }}{{ .Title }}{{ else }}{{ cond (eq .Kind "404") (i18n "nf_title") .Title }} | {{ site.Title }}{{ end }}</title>
+{{- .Store.Set "description" $desc }}
+<title>{{ $title }}</title>
 <meta name="description" content="{{ $desc }}">
 <meta name="author" content="{{ site.Params.author }}">
-{{- if eq .Kind "404" }}
+{{- if or (eq .Kind "404") .Draft }}
 <meta name="robots" content="noindex">
 {{- else }}
-<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <link rel="canonical" href="{{ .Permalink }}">
 {{- end }}
 {{- with site.GetPage "/posts" }}{{ with .OutputFormats.Get "rss" }}
 <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ site.Title }}">
 {{- end }}{{ end }}
+{{- with site.Home.OutputFormats.Get "LLMS" }}
+<link rel="describedby" type="text/plain" href="{{ .RelPermalink }}">
+{{- end }}
 {{- with site.Params.googleVerification }}
 <meta name="google-site-verification" content="{{ . }}">
 {{- end }}
@@ -32,7 +39,7 @@
 
 <meta property="og:site_name" content="{{ site.Title }}">
 <meta property="og:type" content="{{ if $isPost }}article{{ else }}website{{ end }}">
-<meta property="og:title" content="{{ .Title }}">
+<meta property="og:title" content="{{ $title }}">
 <meta property="og:description" content="{{ $desc }}">
 <meta property="og:url" content="{{ .Permalink }}">
 <meta property="og:locale" content="es_ES">
@@ -55,7 +62,7 @@
 <meta name="twitter:image:alt" content="{{ $.Title }}">
 {{- end }}
 <meta name="twitter:card" content="{{ if $og }}summary_large_image{{ else }}summary{{ end }}">
-<meta name="twitter:title" content="{{ .Title }}">
+<meta name="twitter:title" content="{{ $title }}">
 <meta name="twitter:description" content="{{ $desc }}">
 
 <link rel="icon" href="{{ "pixel/logo.svg" | relURL }}" type="image/svg+xml">

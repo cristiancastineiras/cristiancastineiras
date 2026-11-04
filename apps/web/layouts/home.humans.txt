@@ -1,0 +1,12 @@
+/* TEAM */
+Author: {{ site.Params.author }}
+Role: {{ site.Params.role }}
+Location: {{ site.Params.locality }}, {{ site.Params.region }}
+{{ with site.Params.github }}GitHub: https://github.com/{{ . }}{{ end }}
+{{ with site.Params.linkedin }}LinkedIn: https://www.linkedin.com/in/{{ . }}/{{ end }}
+
+/* SITE */
+URL: {{ site.Home.Permalink }}
+Language: {{ site.Language.Locale }}
+Generator: Hugo {{ hugo.Version }}
+Standards: HTML, CSS, RSS, JSON-LD
