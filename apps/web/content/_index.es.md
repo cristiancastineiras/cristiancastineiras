@@ -14,15 +14,42 @@ Aquí escribo sobre lo que aprendo por el camino, y cada vez más sobre cómo tr
 - .NET
 - C#
 - ASP.NET Core
+- Entity Framework Core
+- LINQ
+- REST
+- OpenAPI
 - React
 - TypeScript
+- JavaScript
+- HTML
+- CSS
+- Vite
+- Tailwind CSS
+- Zustand
+- Node.js
+- pnpm
+- Turborepo
 - accesibilidad
 - i18n
+- diseño responsive
 - monorepos
+- arquitectura de software
+- refactorización de legacy
+- testing
 - CI/CD
+- GitHub Actions
+- Docker
+- Linux
+- Cloudflare Tunnel
+- observabilidad
 - Elasticsearch
 - WSO2
+- SQL
+- Git
 - Rust
 - agentes de IA
-- refactorización de legacy
+- MCP
+- automatización
+- rendimiento web
+- SEO técnico
 
