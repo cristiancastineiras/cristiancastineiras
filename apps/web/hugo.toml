@@ -43,6 +43,8 @@ disableKinds = ["taxonomy", "term"]
   github = "cristiancastineiras"
   linkedin = "cristian-arana-casti%C3%B1eiras-758278239"
   email = "cristianaranacastineiras@gmail.com"
+  kofi = "https://ko-fi.com/cristiancastineiras"
+  buyMeACoffee = "https://buymeacoffee.com/cristiancastineiras"
   # Imagen para redes (1200×630, en assets/ o static/). Se regenera con scripts/og.html (ver README).
   ogImage = "img/og-es.png"
   # Analítica sin cookies (https://<nombre>.goatcounter.com). Vacío = sin analítica.

@@ -114,10 +114,23 @@ code, kbd, pre { font-family: var(--mono); }
 .links a { display: inline-flex; align-items: center; gap: 7px; min-height: 32px; color: var(--muted); text-decoration: none; font-size: 0.95rem; }
 .links a:hover { color: var(--text); }
 
+.support { margin-block: 28px 40px; padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg-soft); }
+.support p { margin: 0 0 12px; color: var(--muted); font-size: 0.95rem; }
+.support-links { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; }
+.support-button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 44px; padding: 9px 14px; border: 1px solid transparent; border-radius: 10px; color: #1f2328; text-decoration: none; font-size: 0.95rem; font-weight: 650; transition: transform 150ms ease, box-shadow 150ms ease; }
+.support-button:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgb(31 35 40 / 0.16); }
+.support-button--kofi { background: #ff5e5b; }
+.support-button--buymeacoffee { background: #ffdd00; }
+
 .site-footer { margin-top: 96px; border-top: 1px solid var(--line); padding-block: 24px 40px; font-size: 0.9rem; color: var(--muted); }
 .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; }
 .foot p { margin: 0; }
 .foot .links a { font-size: 0.9rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .support-button { transition: none; }
+  .support-button:hover { transform: none; }
+}
 .legal { margin: 8px auto 0; font-size: 0.8rem; }
 
 /* ---------- Portada ---------- */

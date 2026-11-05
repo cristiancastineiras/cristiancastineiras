@@ -9,6 +9,14 @@ other = "Blog"
 other = "en"
 [photo_alt]
 other = "Foto de {{ . }}"
+[support_title]
+other = "Apoya mi trabajo"
+[support_text]
+other = "Si te gusta lo que comparto, puedes invitarme a un café y ayudarme a seguir creando."
+[support_kofi]
+other = "Apóyame en Ko-fi"
+[support_buy_me_a_coffee]
+other = "Buy Me a Coffee"
 [posts_title]
 other = "Posts"
 [all_posts]

@@ -1,0 +1,13 @@
+{{- if or site.Params.kofi site.Params.buyMeACoffee }}
+<aside class="support" aria-label="{{ i18n "support_title" }}">
+  <p>{{ i18n "support_text" }}</p>
+  <ul class="support-links">
+    {{- with site.Params.kofi }}
+    <li><a class="support-button support-button--kofi" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ partial "icon.html" "kofi" }}{{ i18n "support_kofi" }}</a></li>
+    {{- end }}
+    {{- with site.Params.buyMeACoffee }}
+    <li><a class="support-button support-button--buymeacoffee" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ partial "icon.html" "buymeacoffee" }}{{ i18n "support_buy_me_a_coffee" }}</a></li>
+    {{- end }}
+  </ul>
+</aside>
+{{- end }}

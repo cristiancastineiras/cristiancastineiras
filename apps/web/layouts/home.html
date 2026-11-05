@@ -16,6 +16,7 @@
   </header>
   {{ partial "links.html" . }}
   <div class="prose bio">{{ .Content }}</div>
+  {{ partial "support.html" . }}
 
   {{- with site.GetPage "/posts" }}
   <section class="home-posts" aria-labelledby="posts-title">
